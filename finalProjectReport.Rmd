@@ -1,8 +1,8 @@
 ---
 title: "An Anyalsis Of The Housing Market"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 date: "2025-08-17"
 ---
 
@@ -18,7 +18,7 @@ df = read.csv('housing.csv')
 ```
 
 
-The housing market in the U.S is very vital to understand. Those with the finical ability to acquire a house are investing in an asset that they perceive will one day grow in value. The money behind a housing purchase is not small and with such a large purchase it is important to understand the forces that drive the prices of that asset. This report will detail historic price drivers in the housing market along with the current force that is pushing prices. 
+The housing market in the U.S is very vital to understand. Those with the finical ability to acquire a house are investing in an asset that they perceive will one day grow in value. The money behind a housing purchase is not small and with such a large purchase it is important to understand the forces that drive the prices of that asset. This report will detail historic price drivers in the housing market along with the current force that is pushing prices. Index versions of graphs with a base year of 2000 are included. These serve to highlight the relationship between values however the values themselves are more difficult to interpret. The focus is on the non indexed graphs for an understanding of the values and index to further accent the present relationship. 
 
 Below is a graph that shows the average housing price over time. The long run trend of the housing market is upwards with short run fluctuations. Pictured on this graph in gray are when the U.S was in a recessionary period as macro-economic conditions can pull down prices. The biggest drop in the housing market started after the 2008 recession, which is known as the “Great Recession”. 
 
@@ -38,7 +38,7 @@ df %>% ggplot(aes(x = as.Date(Date), y = AverageSalesPrice)) +
 
 ```
 
-Below are two graphs that show how economic uncertainty and unemployment fluctuate with prices. While there is some short run volatility there is no relationship between these two and the long run trend of increasing housing prices. Overall, these two can be used to describe the health of the macroeconomy and only when the macroeconomy is in a recession may we see a short run relationship. However, we see that during two recessions the prices of the housing market continued to rise and as such the fall in prices during the great recession was not due to the macroeconomy but rather the collapse of a force driving up the prices.
+Below are two types of graphs that show how economic uncertainty and unemployment fluctuate with prices. While there is some short run volatility there is no relationship between these two and the long run trend of increasing housing prices. Overall, these two can be used to describe the health of the macroeconomy and only when the macroeconomy is in a recession may we see a short run relationship. However, we see that during two recessions the prices of the housing market continued to rise and as such the fall in prices during the great recession was not due to the macroeconomy but rather the collapse of a force driving up the prices.
 
 ```{r}
 
@@ -64,6 +64,30 @@ df %>% ggplot(aes(x = as.Date(Date))) +
 ```{r}
 
 
+IndexedAverageSalesPrice = (df$AverageSalesPrice / (df %>% filter(as.Date(Date) == as.Date('2000-01-01')))$AverageSalesPrice ) * 100
+IndexedUncertainty = (df$EconomicPolicyUncertaintyIndex / (df %>% filter(as.Date(Date) == as.Date('2000-01-01')))$EconomicPolicyUncertaintyIndex) * 100
+
+df %>% ggplot(aes(x = as.Date(Date))) +
+    geom_rect(xmin = as.Date('1990-07-01'), xmax = as.Date('1991-2-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+  geom_rect(xmin = as.Date('2001-03-01'), xmax = as.Date('2001-11-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+  geom_rect(xmin = as.Date('2007-12-01'), xmax = as.Date('2009-05-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+   geom_rect(xmin = as.Date('2020-02-01'), xmax = as.Date('2020-04-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+  geom_line(aes(y = IndexedAverageSalesPrice), color = 'blue') + 
+  geom_line(aes(y = IndexedUncertainty), color = 'darkgreen', linetype = "dashed") +
+  scale_y_continuous(labels = comma, sec.axis = sec_axis(~ . , name = 'Uncertainity Index'))+  
+  labs(title = 'Indexed Average Housing Price and Economic Uncertainity Over Time',
+       x = 'Year',
+       y = 'Housing Price Index (USD)',
+      caption = 'Gray Regions are Recessions in the U.S\nBase Year = 2000') +
+  theme_minimal() + theme ( axis.title.y.right = element_text(color = "darkgreen") , axis.title.y.left = element_text(color = "blue") )
+
+```
+
+
+
+```{r}
+
+
 scale_factor <- max(df$AverageSalesPrice) / max(df$UnemploymentRate )
 
 
@@ -83,6 +107,29 @@ df %>% ggplot(aes(x = as.Date(Date))) +
 
 ```
 
+```{r}
+
+
+indexedAverageSalesPrice = (df$AverageSalesPrice / (df %>% filter(as.Date(Date) == as.Date('2000-01-01')))$AverageSalesPrice ) * 100
+indexedUnemployment = (df$EconomicPolicyUncertaintyIndex / (df %>% filter(as.Date(Date) == as.Date('2000-01-01')))$EconomicPolicyUncertaintyIndex) * 100
+
+df %>% ggplot(aes(x = as.Date(Date))) +
+    geom_rect(xmin = as.Date('1990-07-01'), xmax = as.Date('1991-2-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+  geom_rect(xmin = as.Date('2001-03-01'), xmax = as.Date('2001-11-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+  geom_rect(xmin = as.Date('2007-12-01'), xmax = as.Date('2009-05-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+   geom_rect(xmin = as.Date('2020-02-01'), xmax = as.Date('2020-04-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+  geom_line(aes(y = indexedAverageSalesPrice), color = 'blue') + 
+  geom_line(aes(y = indexedUnemployment), color = 'darkgreen', linetype = "dashed") +
+  scale_y_continuous(labels = comma, sec.axis = sec_axis(~ . , name = 'Unemployment Rate Index'))+  
+  labs(title = 'Indexed Average Housing Price and Unemployment Rate Over Time',
+       x = 'Year',
+       y = 'Housing Price Index (USD)',
+      caption = 'Gray Regions are Recessions in the U.S\nBase Year = 2000') +
+  theme_minimal() + theme ( axis.title.y.right = element_text(color = "darkgreen") , axis.title.y.left = element_text(color = "blue") )
+
+```
+
+
 # The Housing Bubble
 
 From 1990-2007 the housing market was in a bubble. In a normal market the price of a good is at the equilibrium found between supply and demand. People’s demand is inversely related to price, i.e if a good is priced higher than less people will want it. Firms want to price their goods as high as possible so the price is positively related to price. The intersection of the supply of good and the demand for them is called the market equilibrium and the forces of the market push that price to be at that level. This concept is critically to the state of the housing market during this time. 
@@ -91,6 +138,8 @@ There are two graphs below that focus on the supply fluctuations on the market b
 The graph below shows how the supply of houses fluctuates over time. The black line is how many new houses are created, and the red line is the ratio of the new houses created divided by the new houses sold. These two values give us a clear insight into the supply and demand. We see from 1990 to 2000 that new houses keep being introduced to the market. While the physical supply of houses is increasing, it is important to note that when a house is bought it is removed from the market. So, if 1 new house is built a day but 2 houses are bought that day then the supply is actually falling. The ratio of the new houses to new houses sold captures this value. We see that during the period of 1990 to 2000 that the ratio is falling and as such can conclude that there is no supply issue in this market during this time. What we can conclude from this is that holding demand constant the housing prices should only increase slightly at the rate of inflation. 
 
 While from 2000-2005 the number of houses entering the market has fallen the stability in the ratio shows that on the supply side there is not a disbalance in the market. However, from 2005 onwards we see a lot of houses enter the market and after that we see a massive spike in the ratio. This means that there are more new houses in the market than ones being bought, in other words we should have a housing surplus holding demand constant. When the supply is greater than demand we expect the prices of houses to fall. 
+
+An indexed graph with a base year of 2000 is included below to further demonstrate the relationship between the New Homes Created and Ratio of New Homes purchased. 
 
 
 ```{r}
@@ -130,7 +179,35 @@ df %>% filter(as.Date(Date) < as.Date('2007-12-01') ) %>%ggplot(aes(x = as.Date(
   theme_minimal()+ theme ( axis.title.y.right = element_text(color = "red")  )
 
 ```
-In our previous analysis we held demand constant and the below graph shows why this assumption is valid. People buy a home to live in it and so we can proxy the homeownership rate as a measure of need. We infer a stable market to proxy need as demand. Some people cannot buy homes because they do not have the means hence, we cannot expect the rate to be at 100%. Instead, as more people grow up and can buy homes if there is a higher demand for homeownership then the rate will be pushed upwards. Since the fluctuations in the rate are small we can presume that throughout this period the demand for people with the means to buy a home has remained the same.   
+
+```{r}
+
+
+indexedTotalShipmentsofNewHomes = (df$TotalShipmentsofNewHomes / (df %>% filter(as.Date(Date) == as.Date('2000-01-01')))$TotalShipmentsofNewHomes ) * 100
+indexedMonthlySupplyofNewHouses= (df$MonthlySupplyofNewHouses / (df %>% filter(as.Date(Date) == as.Date('2000-01-01')))$MonthlySupplyofNewHouses) * 100
+s_indexedTotalShipmentsofNewHomes = ((df %>% filter(as.Date(Date) < as.Date('2007-12-01')))$TotalShipmentsofNewHomes / (df %>% filter(as.Date(Date) == as.Date('2000-01-01')))$TotalShipmentsofNewHomes ) * 100
+s_indexedMonthlySupplyofNewHouses= ((df %>% filter(as.Date(Date) < as.Date('2007-12-01')))$MonthlySupplyofNewHouses / (df %>% filter(as.Date(Date) == as.Date('2000-01-01')))$MonthlySupplyofNewHouses) * 100
+
+df %>% filter(as.Date(Date) < as.Date('2007-12-01') ) %>% ggplot(aes(x = as.Date(Date))) +
+    geom_rect(xmin = as.Date('1990-07-01'), xmax = as.Date('1991-2-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+  geom_rect(xmin = as.Date('2001-03-01'), xmax = as.Date('2001-11-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+  geom_rect(xmin = as.Date('2007-12-01'), xmax = as.Date('2009-05-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+   geom_rect(xmin = as.Date('2020-02-01'), xmax = as.Date('2020-04-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+  geom_line(aes(y = s_indexedTotalShipmentsofNewHomes), color = 'blue') + 
+  geom_line(aes(y = s_indexedMonthlySupplyofNewHouses), color = 'darkgreen', linetype = "dashed") +
+  scale_y_continuous(labels = comma, sec.axis = sec_axis(~ . , name = 'Ratio of New Houses To New Houses Sold Index'))+  
+  labs(title = 'Indexed Supply Fluctuations Before The Great Recession ',
+       x = 'Year',
+       y = 'New Homes Created Index',
+      caption = 'Gray Regions are Recessions in the U.S\nBase Year = 2000') +
+  theme_minimal() + theme ( axis.title.y.right = element_text(color = "darkgreen") , axis.title.y.left = element_text(color = "blue") )
+
+```
+
+
+In our previous analysis we held demand constant and the below graph shows why this assumption is valid. People buy a home to live in it and so we can proxy the homeownership rate as a measure of need. We infer a stable market to proxy need as demand. Some people cannot buy homes because they do not have the means hence, we cannot expect the rate to be at 100%. Instead, as more people grow up and can buy homes if there is a higher demand for homeownership then the rate will be pushed upwards. Since the fluctuations in the rate are small we can presume that throughout this period the demand for people with the means to buy a home has remained the same. 
+
+An indexed graph with a base year of 2000 is included below to further demonstrate the stability present within the demand side of the market. 
 
 ```{r}
 scale_factor_r <-  df %>% filter(as.Date(Date) < as.Date('2007-12-01') ) %>% select(TotalShipmentsofNewHomes) %>% max() / df %>% filter(as.Date(Date) < as.Date('2007-12-01') ) %>% select(HomeownershipRate) %>% max() 
@@ -148,6 +225,30 @@ df %>% filter(as.Date(Date) < as.Date('2007-12-01') ) %>%ggplot(aes(x = as.Date(
        y = 'New Homes Created (Thousands)',
       caption = 'Gray Regions are Recessions in the U.S') +
   theme_minimal()+ theme ( axis.title.y.right = element_text(color = "red")  )
+```
+
+
+
+```{r}
+
+
+s_indexedTotalShipmentsofNewHomes = ((df %>% filter(as.Date(Date) < as.Date('2007-12-01')))$TotalShipmentsofNewHomes / (df %>% filter(as.Date(Date) == as.Date('2000-01-01')))$TotalShipmentsofNewHomes ) * 100
+s_indexedHomeownershipRate= ((df %>% filter(as.Date(Date) < as.Date('2007-12-01')))$HomeownershipRate / (df %>% filter(as.Date(Date) == as.Date('2000-01-01')))$HomeownershipRate) * 100
+
+df %>% filter(as.Date(Date) < as.Date('2007-12-01') ) %>% ggplot(aes(x = as.Date(Date))) +
+    geom_rect(xmin = as.Date('1990-07-01'), xmax = as.Date('1991-2-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+  geom_rect(xmin = as.Date('2001-03-01'), xmax = as.Date('2001-11-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+  geom_rect(xmin = as.Date('2007-12-01'), xmax = as.Date('2009-05-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+   geom_rect(xmin = as.Date('2020-02-01'), xmax = as.Date('2020-04-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+  geom_line(aes(y = s_indexedTotalShipmentsofNewHomes), color = 'blue') + 
+  geom_line(aes(y = s_indexedHomeownershipRate), color = 'darkgreen', linetype = "dashed") +
+  scale_y_continuous(labels = comma, sec.axis = sec_axis(~ . , name = 'Ratio of New Houses To New Houses Sold Index'))+  
+  labs(title = 'Indexed Demand Fluctuations Before The Great Recession ',
+       x = 'Year',
+       y = 'Homeownership Rate Index',
+      caption = 'Gray Regions are Recessions in the U.S\nBase Year = 2000') +
+  theme_minimal() + theme ( axis.title.y.right = element_text(color = "darkgreen") , axis.title.y.left = element_text(color = "blue") )
+
 ```
 
 Noted previously when looking at the housing supply before the great recession we expect to see small increases in the housing prices and then a fall in prices from 2005-2007. However, looking at the below graph we do not see this relationship to be true at all. The price was rising significantly throughout the entire period and rose very fast after 2005. For emphasis we can see in red that the supply is increasing and if the demand was held constant then the prices should not be increasing. This disbalance in the forces of supply and demand is what it means for a market to be in a bubble. The prices were rising the entire period in spite of stability in the supply which should have seen lower prices. The reason that this betrayed our expectations is because of the nature of a bubble. Homeownership rate changes can capture a new homeowner meeting their needs by buying a home however this measure fails to capture a person buying another home. This person has no need for another home and the only reason they would be it is for a speculative reason. People looked at the rising housing prices and thought that houses would continue to grow in value further artificially boosting the demand.  However since this demand is artificial and not based off of need it results in prices rising to meet expectations until they inevitably fall and goes down to the true demand level. 
@@ -173,6 +274,28 @@ df %>% ggplot(aes(x = as.Date(Date)))  +
        y = 'Housing Price (USD)',
       caption = 'Gray Regions are Recessions in the U.S') +
   theme_minimal() + theme ( axis.title.y.right = element_text(color = "red")  )
+
+```
+
+```{r}
+
+indexedAverageSalesPrice = (df$AverageSalesPrice / (df %>% filter(as.Date(Date) == as.Date('2000-01-01')))$AverageSalesPrice ) * 100
+indexedTotalShipmentsofNewHomes = (df$TotalShipmentsofNewHomes / (df %>% filter(as.Date(Date) == as.Date('2000-01-01')))$TotalShipmentsofNewHomes ) * 100
+
+
+df %>% ggplot(aes(x = as.Date(Date))) +
+    geom_rect(xmin = as.Date('1990-07-01'), xmax = as.Date('1991-2-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+  geom_rect(xmin = as.Date('2001-03-01'), xmax = as.Date('2001-11-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+  geom_rect(xmin = as.Date('2007-12-01'), xmax = as.Date('2009-05-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+   geom_rect(xmin = as.Date('2020-02-01'), xmax = as.Date('2020-04-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+  geom_line(aes(y = indexedAverageSalesPrice), color = 'blue') + 
+  geom_line(aes(y = indexedTotalShipmentsofNewHomes), color = 'darkgreen', linetype = "dashed") +
+  scale_y_continuous(labels = comma, sec.axis = sec_axis(~ . , name = 'New Homes Created Index'))+  
+  labs(title = 'Indexed Price Movements with Respect to Supply',
+       x = 'Year',
+       y = 'Housing Price (USD)',
+      caption = 'Gray Regions are Recessions in the U.S\nBase Year = 2000') +
+  theme_minimal() + theme ( axis.title.y.right = element_text(color = "darkgreen") , axis.title.y.left = element_text(color = "blue") )
 
 ```
 
@@ -211,15 +334,37 @@ df %>% ggplot(aes(x = as.Date(Date)))  +
 
 ```
 
+```{r}
+indexedHomeownershipRate = (df$HomeownershipRate / (df %>% filter(as.Date(Date) == as.Date('2000-01-01')))$HomeownershipRate ) * 100
+indexedOccupiedHousingUnits = (df$OccupiedHousingUnits / (df %>% filter(as.Date(Date) == as.Date('2000-01-01')))$OccupiedHousingUnits ) * 100
+
+
+df %>% ggplot(aes(x = as.Date(Date))) +
+    geom_rect(xmin = as.Date('1990-07-01'), xmax = as.Date('1991-2-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+  geom_rect(xmin = as.Date('2001-03-01'), xmax = as.Date('2001-11-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+  geom_rect(xmin = as.Date('2007-12-01'), xmax = as.Date('2009-05-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+   geom_rect(xmin = as.Date('2020-02-01'), xmax = as.Date('2020-04-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+  geom_line(aes(y = indexedHomeownershipRate), color = 'blue') + 
+  geom_line(aes(y = indexedOccupiedHousingUnits), color = 'darkgreen', linetype = "dashed") +
+  scale_y_continuous(labels = comma, sec.axis = sec_axis(~ . , name = 'Occupied Housing Units Index'))+  
+  labs(title = 'Indexed Homeownership and Occupied Housing Over Time',
+       x = 'Year',
+       y = 'Home Ownership Rate Index',
+      caption = 'Gray Regions are Recessions in the U.S\nBase Year = 2000') +
+  theme_minimal() + theme ( axis.title.y.right = element_text(color = "darkgreen") , axis.title.y.left = element_text(color = "blue") )
+```
+
 Focusing on analyzing the relationship between the homeownership rate and occupied houses, the two graphs below are snapshots of two different periods. In the first period of 2017-2020 we see the homeownership rate is moving with the occupied houses. Meaning that the number of people buying homes is outpacing the number of people entering the population. Yet in 2020-2025 we do not see the same picture. The homeownership has a brief spike due to the pandemic pushing people to buy more homes but the homeownership rate quickly falls. The number of occupied houses continues to grow which would suggest that the population growth has outpaced the growth of the housing market. This suggestion has two vital implications that involve the context of covid to illuminate.
 1.	During the pandemic population growth was very low meaning that a greater negative impact to the supply of homes had to occur for this relationship to appear.
 2.	Covid disrupted supply chains everywhere stalling the construction of houses. 
 These factors illuminate that the number of houses in the market has drastically fallen meaning that unlike the housing bubble there is an actual supply demand disbalance in the market.  The supply of houses is not meeting the demand for houses which is called a shortage and is an upward pressure on prices. Meaning that if situations stay constant the housing market will continue to surge in prices.
 
+For the indexed graphs since the year 2000 is not in the subset of years considered they instead are indexed around 2017. A version indexed around 2000 is included and while the trends exist it is harder to see. However, in the set of graphs indexed around 2017 the previously outlined relationship is clear to see as the values follow eachother pre covid but begin to diverge post covid. 
+
 
 ```{r}
 scale_factor_pre <- df %>% filter(as.Date(Date) < as.Date('2020-02-01') & as.Date(Date) > as.Date('2017-02-01')) %>% select(HomeownershipRate) %>% max() / df %>% filter(as.Date(Date) < as.Date('2020-02-01') & as.Date(Date) > as.Date('2017-02-01')) %>% select(OccupiedHousingUnits ) %>% max() 
-scale_factor_covid <- df %>% filter(as.Date(Date) >= as.Date('2020-02-01') ) %>% select(HomeownershipRate) %>% max() / df %>% filter(as.Date(Date) >= as.Date('2020-02-01') ) %>% select(OccupiedHousingUnits ) %>% max()
+scale_factor_covid <- df %>% filter(as.Date(Date) >= as.Date('2020-02-01')) %>% select(HomeownershipRate) %>% max() / df %>% filter(as.Date(Date) >= as.Date('2020-02-01') ) %>% select(OccupiedHousingUnits ) %>% max()
 
 
 df %>% filter(as.Date(Date) < as.Date('2020-02-01') & as.Date(Date) > as.Date('2017-02-01'))%>% 
@@ -259,6 +404,91 @@ df %>% filter(as.Date(Date) >= as.Date('2020-02-01') )%>%
 
 
 ```
+```{r}
+
+
+s_indexedHomeownershipRate = ((df %>% filter(as.Date(Date) < as.Date('2020-02-01') & as.Date(Date) > as.Date('2017-02-01')))$HomeownershipRate / (df %>% filter(as.Date(Date) == as.Date('2000-01-01')))$HomeownershipRate ) * 100
+s_indexedOccupiedHousingUnits = ((df %>% filter(as.Date(Date) < as.Date('2020-02-01') & as.Date(Date) > as.Date('2017-02-01')))$OccupiedHousingUnits / (df %>% filter(as.Date(Date) == as.Date('2000-01-01')))$OccupiedHousingUnits) * 100
+c_indexedHomeownershipRate = ((df%>% filter(as.Date(Date) >= as.Date('2020-02-01')))$HomeownershipRate / (df %>% filter(as.Date(Date) == as.Date('2000-01-01')))$HomeownershipRate ) * 100
+c_indexedOccupiedHousingUnits = ((df %>% filter(as.Date(Date) >= as.Date('2020-02-01')))$OccupiedHousingUnits / (df %>% filter(as.Date(Date) == as.Date('2000-01-01')))$OccupiedHousingUnits) * 100
+
+
+df %>% filter(as.Date(Date) < as.Date('2020-02-01') & as.Date(Date) > as.Date('2017-02-01'))%>%  ggplot(aes(x = as.Date(Date))) +
+    geom_rect(xmin = as.Date('1990-07-01'), xmax = as.Date('1991-2-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+  geom_rect(xmin = as.Date('2001-03-01'), xmax = as.Date('2001-11-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+  geom_rect(xmin = as.Date('2007-12-01'), xmax = as.Date('2009-05-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+   geom_rect(xmin = as.Date('2020-02-01'), xmax = as.Date('2020-04-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+  geom_line(aes(y = s_indexedHomeownershipRate), color = 'blue') + 
+  geom_line(aes(y = s_indexedOccupiedHousingUnits), color = 'darkgreen', linetype = "dashed") +
+  scale_y_continuous(labels = comma, sec.axis = sec_axis(~ . , name = 'Occupied Housing Units Index'))+  
+  labs(title = 'Indexed Year 2000 Pre Covid (2017-2020)',
+       x = 'Year',
+       y = 'Homeownership Rate Index',
+      caption = 'Gray Regions are Recessions in the U.S\nBase Year = 2000') +
+  theme_minimal() + theme ( axis.title.y.right = element_text(color = "darkgreen") , axis.title.y.left = element_text(color = "blue") )
+
+
+df %>% filter(as.Date(Date) >= as.Date('2020-02-01') )%>% 
+  ggplot(aes(x = as.Date(Date))) +
+    geom_rect(xmin = as.Date('1990-07-01'), xmax = as.Date('1991-2-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+  geom_rect(xmin = as.Date('2001-03-01'), xmax = as.Date('2001-11-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+  geom_rect(xmin = as.Date('2007-12-01'), xmax = as.Date('2009-05-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+   geom_rect(xmin = as.Date('2020-02-01'), xmax = as.Date('2020-04-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+  geom_line(aes(y = c_indexedHomeownershipRate), color = 'blue') + 
+  geom_line(aes(y = c_indexedOccupiedHousingUnits), color = 'darkgreen', linetype = "dashed") +
+  scale_y_continuous(labels = comma, sec.axis = sec_axis(~ . , name = 'Occupied Housing Units Index'))+  
+  labs(title = 'Indexed Year 2000 Post Covid (2020-2025)',
+       x = 'Year',
+       y = 'Homeownership Rate Index',
+      caption = 'Gray Regions are Recessions in the U.S\nBase Year = 2000') +
+  theme_minimal() + theme ( axis.title.y.right = element_text(color = "darkgreen") , axis.title.y.left = element_text(color = "blue") )
+
+```
+
+```{r}
+
+
+s_indexedHomeownershipRate = ((df %>% filter(as.Date(Date) < as.Date('2020-02-01') & as.Date(Date) > as.Date('2017-02-01')))$HomeownershipRate / (df %>% filter(as.Date(Date) == as.Date('2017-02-01')))$HomeownershipRate ) * 100
+s_indexedOccupiedHousingUnits = ((df %>% filter(as.Date(Date) < as.Date('2020-02-01') & as.Date(Date) > as.Date('2017-02-01')))$OccupiedHousingUnits / (df %>% filter(as.Date(Date) == as.Date('2017-02-01')))$OccupiedHousingUnits) * 100
+c_indexedHomeownershipRate = ((df%>% filter(as.Date(Date) >= as.Date('2020-02-01')))$HomeownershipRate / (df %>% filter(as.Date(Date) == as.Date('2017-02-01')))$HomeownershipRate ) * 100
+c_indexedOccupiedHousingUnits = ((df %>% filter(as.Date(Date) >= as.Date('2020-02-01')))$OccupiedHousingUnits / (df %>% filter(as.Date(Date) == as.Date('2017-02-01')))$OccupiedHousingUnits) * 100
+
+
+df %>% filter(as.Date(Date) < as.Date('2020-02-01') & as.Date(Date) > as.Date('2017-02-01'))%>%  ggplot(aes(x = as.Date(Date))) +
+    geom_rect(xmin = as.Date('1990-07-01'), xmax = as.Date('1991-2-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+  geom_rect(xmin = as.Date('2001-03-01'), xmax = as.Date('2001-11-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+  geom_rect(xmin = as.Date('2007-12-01'), xmax = as.Date('2009-05-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+   geom_rect(xmin = as.Date('2020-02-01'), xmax = as.Date('2020-04-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+  geom_line(aes(y = s_indexedHomeownershipRate), color = 'purple') + 
+  geom_line(aes(y = s_indexedOccupiedHousingUnits), color = 'darkorange', linetype = "dashed") +
+  scale_y_continuous(labels = comma, sec.axis = sec_axis(~ . , name = 'Occupied Housing Units Index'))+  
+  labs(title = 'Indexed Year 2017 Pre Covid (2017-2020)',
+       x = 'Year',
+       y = 'Homeownership Rate Index',
+      caption = 'Gray Regions are Recessions in the U.S\nBase Year = 2017') +
+  theme_minimal() + theme ( axis.title.y.right = element_text(color = "purple") , axis.title.y.left = element_text(color = "darkorange") )
+
+
+df %>% filter(as.Date(Date) >= as.Date('2020-02-01') )%>% 
+  ggplot(aes(x = as.Date(Date))) +
+    geom_rect(xmin = as.Date('1990-07-01'), xmax = as.Date('1991-2-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+  geom_rect(xmin = as.Date('2001-03-01'), xmax = as.Date('2001-11-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+  geom_rect(xmin = as.Date('2007-12-01'), xmax = as.Date('2009-05-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+   geom_rect(xmin = as.Date('2020-02-01'), xmax = as.Date('2020-04-01'), ymin = -Inf, ymax = Inf, fill = "grey70", alpha = 0.4) +
+  geom_line(aes(y = c_indexedHomeownershipRate), color = 'purple') + 
+  geom_line(aes(y = c_indexedOccupiedHousingUnits), color = 'darkorange', linetype = "dashed") +
+  scale_y_continuous(labels = comma, sec.axis = sec_axis(~ . , name = 'Occupied Housing Units Index'))+  
+  labs(title = 'Indexed Year 2017 Post Covid (2020-2025)',
+       x = 'Year',
+       y = 'Homeownership Rate Index',
+      caption = 'Gray Regions are Recessions in the U.S\nBase Year = 2017') +
+  theme_minimal() + theme ( axis.title.y.right = element_text(color = "purple") , axis.title.y.left = element_text(color = "darkorange") )
+
+```
 
 # Should a House be bought: 
 Purchasing a house during a bubble is unwise however, we are not in those conditions right now. The market is currently boosted by high inflation and a shortage. Currently terrible economic policies run rampant and inflation seems like it will only continue to rise. However, the fate of the shortage is unknown. It does seem like there are more houses being introduced to the market and the prices might begin to fall. It is potentially a risk to buy many houses right now due to instability and the shortage potentially dropping prices. If one is in need of a house and wants to buy one right now then it is not an unwise decision but one could also wait and see if the shortage can be meet and in term drop prices. 
+
+```{r}
+rsconnect::writeManifest()
+```

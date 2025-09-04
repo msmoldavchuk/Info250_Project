@@ -1,0 +1,303 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={An Anyalsis Of The Housing Market},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{An Anyalsis Of The Housing Market}
+\author{}
+\date{\vspace{-2.5em}2025-08-17}
+
+\begin{document}
+\maketitle
+
+The housing market in the U.S is very vital to understand. Those with
+the finical ability to acquire a house are investing in an asset that
+they perceive will one day grow in value. The money behind a housing
+purchase is not small and with such a large purchase it is important to
+understand the forces that drive the prices of that asset. This report
+will detail historic price drivers in the housing market along with the
+current force that is pushing prices. Index versions of graphs with a
+base year of 2000 are included. These serve to highlight the
+relationship between values however the values themselves are more
+difficult to interpret. The focus is on the non indexed graphs for an
+understanding of the values and index to further accent the present
+relationship.
+
+Below is a graph that shows the average housing price over time. The
+long run trend of the housing market is upwards with short run
+fluctuations. Pictured on this graph in gray are when the U.S was in a
+recessionary period as macro-economic conditions can pull down prices.
+The biggest drop in the housing market started after the 2008 recession,
+which is known as the ``Great Recession''.
+
+\includegraphics{test_files/figure-latex/unnamed-chunk-1-1.pdf}
+
+Below are two types of graphs that show how economic uncertainty and
+unemployment fluctuate with prices. While there is some short run
+volatility there is no relationship between these two and the long run
+trend of increasing housing prices. Overall, these two can be used to
+describe the health of the macroeconomy and only when the macroeconomy
+is in a recession may we see a short run relationship. However, we see
+that during two recessions the prices of the housing market continued to
+rise and as such the fall in prices during the great recession was not
+due to the macroeconomy but rather the collapse of a force driving up
+the prices.
+
+\includegraphics{test_files/figure-latex/unnamed-chunk-2-1.pdf}
+\includegraphics{test_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+\includegraphics{test_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+\includegraphics{test_files/figure-latex/unnamed-chunk-5-1.pdf}
+
+\section{The Housing Bubble}\label{the-housing-bubble}
+
+From 1990-2007 the housing market was in a bubble. In a normal market
+the price of a good is at the equilibrium found between supply and
+demand. People's demand is inversely related to price, i.e if a good is
+priced higher than less people will want it. Firms want to price their
+goods as high as possible so the price is positively related to price.
+The intersection of the supply of good and the demand for them is called
+the market equilibrium and the forces of the market push that price to
+be at that level. This concept is critically to the state of the housing
+market during this time.
+
+There are two graphs below that focus on the supply fluctuations on the
+market but this analysis will focus on the period of 1990-2007 which was
+before the great recession. The graph below shows how the supply of
+houses fluctuates over time. The black line is how many new houses are
+created, and the red line is the ratio of the new houses created divided
+by the new houses sold. These two values give us a clear insight into
+the supply and demand. We see from 1990 to 2000 that new houses keep
+being introduced to the market. While the physical supply of houses is
+increasing, it is important to note that when a house is bought it is
+removed from the market. So, if 1 new house is built a day but 2 houses
+are bought that day then the supply is actually falling. The ratio of
+the new houses to new houses sold captures this value. We see that
+during the period of 1990 to 2000 that the ratio is falling and as such
+can conclude that there is no supply issue in this market during this
+time. What we can conclude from this is that holding demand constant the
+housing prices should only increase slightly at the rate of inflation.
+
+While from 2000-2005 the number of houses entering the market has fallen
+the stability in the ratio shows that on the supply side there is not a
+disbalance in the market. However, from 2005 onwards we see a lot of
+houses enter the market and after that we see a massive spike in the
+ratio. This means that there are more new houses in the market than ones
+being bought, in other words we should have a housing surplus holding
+demand constant. When the supply is greater than demand we expect the
+prices of houses to fall.
+
+An indexed graph with a base year of 2000 is included below to further
+demonstrate the relationship between the New Homes Created and Ratio of
+New Homes purchased.
+
+\includegraphics{test_files/figure-latex/unnamed-chunk-6-1.pdf}
+\includegraphics{test_files/figure-latex/unnamed-chunk-6-2.pdf}
+
+\includegraphics{test_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+In our previous analysis we held demand constant and the below graph
+shows why this assumption is valid. People buy a home to live in it and
+so we can proxy the homeownership rate as a measure of need. We infer a
+stable market to proxy need as demand. Some people cannot buy homes
+because they do not have the means hence, we cannot expect the rate to
+be at 100\%. Instead, as more people grow up and can buy homes if there
+is a higher demand for homeownership then the rate will be pushed
+upwards. Since the fluctuations in the rate are small we can presume
+that throughout this period the demand for people with the means to buy
+a home has remained the same.
+
+An indexed graph with a base year of 2000 is included below to further
+demonstrate the stability present within the demand side of the market.
+
+\includegraphics{test_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+\includegraphics{test_files/figure-latex/unnamed-chunk-9-1.pdf}
+
+Noted previously when looking at the housing supply before the great
+recession we expect to see small increases in the housing prices and
+then a fall in prices from 2005-2007. However, looking at the below
+graph we do not see this relationship to be true at all. The price was
+rising significantly throughout the entire period and rose very fast
+after 2005. For emphasis we can see in red that the supply is increasing
+and if the demand was held constant then the prices should not be
+increasing. This disbalance in the forces of supply and demand is what
+it means for a market to be in a bubble. The prices were rising the
+entire period in spite of stability in the supply which should have seen
+lower prices. The reason that this betrayed our expectations is because
+of the nature of a bubble. Homeownership rate changes can capture a new
+homeowner meeting their needs by buying a home however this measure
+fails to capture a person buying another home. This person has no need
+for another home and the only reason they would be it is for a
+speculative reason. People looked at the rising housing prices and
+thought that houses would continue to grow in value further artificially
+boosting the demand. However since this demand is artificial and not
+based off of need it results in prices rising to meet expectations until
+they inevitably fall and goes down to the true demand level.
+
+\includegraphics{test_files/figure-latex/unnamed-chunk-10-1.pdf}
+
+\includegraphics{test_files/figure-latex/unnamed-chunk-11-1.pdf}
+
+This is a pivotal piece of history in the housing market and outlines
+that the movements in the housing market is not inherently related to
+business cycles since we now see that this is the reason that prices
+fell during the great recession. However, the most important reason to
+understand this is that it shows blindly looking at the trends in
+housing prices over time without considering other forces will result in
+the wrong picture. While housing prices are currently rising we must
+look at the underlying forces to see if that trend will continue.
+
+\section{The Current Market}\label{the-current-market}
+
+In recent years the Covid 19 pandemic uprooted everything and the
+economy was no exception. Even though it started five years ago it's
+impacts are still felt to this day and the current state of the housing
+market is a perfect example of this. While business cycles do not impact
+the long run prices of the housing market that is not to say it is not
+impacted by the macro economy. The market is subject to inflation and
+during the Covid 19 pandemic inflation grew immensely. As such part of
+the increase in the prices in the housing market can be linked to this
+element. However, this report will detail the other driving force behind
+the housing market prices.
+
+Below is a graph that in black shows the homeownership rate over time
+and in red shows the occupied housing units. We can represent the
+homeownership rate as (number of people who own homes) / (total number
+of people). A change in the homeownership rate can be modeled by
+(existing homeowners + new homeowners) / (total number of people). If we
+look at the trend depicted in the graph we see that the number of
+occupied homes increases with respect to time and assuming the majority
+of those changes comes from first time home owners we would expect the
+home ownership rate to increase. However, this is not occurring and that
+is because the total population is also increasing. The key element to
+analyze is not the volume but instead how the population of people and
+houses grows and move together over time.
+
+\includegraphics{test_files/figure-latex/unnamed-chunk-12-1.pdf}
+
+\includegraphics{test_files/figure-latex/unnamed-chunk-13-1.pdf}
+
+Focusing on analyzing the relationship between the homeownership rate
+and occupied houses, the two graphs below are snapshots of two different
+periods. In the first period of 2017-2020 we see the homeownership rate
+is moving with the occupied houses. Meaning that the number of people
+buying homes is outpacing the number of people entering the population.
+Yet in 2020-2025 we do not see the same picture. The homeownership has a
+brief spike due to the pandemic pushing people to buy more homes but the
+homeownership rate quickly falls. The number of occupied houses
+continues to grow which would suggest that the population growth has
+outpaced the growth of the housing market. This suggestion has two vital
+implications that involve the context of covid to illuminate. 1. During
+the pandemic population growth was very low meaning that a greater
+negative impact to the supply of homes had to occur for this
+relationship to appear. 2. Covid disrupted supply chains everywhere
+stalling the construction of houses. These factors illuminate that the
+number of houses in the market has drastically fallen meaning that
+unlike the housing bubble there is an actual supply demand disbalance in
+the market. The supply of houses is not meeting the demand for houses
+which is called a shortage and is an upward pressure on prices. Meaning
+that if situations stay constant the housing market will continue to
+surge in prices.
+
+For the indexed graphs since the year 2000 is not in the subset of years
+considered they instead are indexed around 2017. A version indexed
+around 2000 is included but the trend is harder to see. However, in the
+set of graphs indexed around 2017 the previously outlined relationship
+is clear to see as the values follow eachother pre covid but begin to
+diverge post covid.
+
+\includegraphics{test_files/figure-latex/unnamed-chunk-14-1.pdf}
+\includegraphics{test_files/figure-latex/unnamed-chunk-14-2.pdf}
+\includegraphics{test_files/figure-latex/unnamed-chunk-15-1.pdf}
+\includegraphics{test_files/figure-latex/unnamed-chunk-15-2.pdf}
+
+\includegraphics{test_files/figure-latex/unnamed-chunk-16-1.pdf}
+\includegraphics{test_files/figure-latex/unnamed-chunk-16-2.pdf}
+
+\section{Should a House be bought:}\label{should-a-house-be-bought}
+
+Purchasing a house during a bubble is unwise however, we are not in
+those conditions right now. The market is currently boosted by high
+inflation and a shortage. Currently terrible economic policies run
+rampant and inflation seems like it will only continue to rise. However,
+the fate of the shortage is unknown. It does seem like there are more
+houses being introduced to the market and the prices might begin to
+fall. It is potentially a risk to buy many houses right now due to
+instability and the shortage potentially dropping prices. If one is in
+need of a house and wants to buy one right now then it is not an unwise
+decision but one could also wait and see if the shortage can be meet and
+in term drop prices.
+
+\begin{verbatim}
+## i Capturing R dependencies
+\end{verbatim}
+
+\begin{verbatim}
+## v Found 64 dependencies
+\end{verbatim}
+
+\end{document}
