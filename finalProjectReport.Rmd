@@ -1,7 +1,6 @@
 ---
 title: "An Anyalsis Of The Housing Market"
 output:
-  html_document: default
   pdf_document: default
 date: "2025-08-17"
 ---
@@ -489,6 +488,4 @@ df %>% filter(as.Date(Date) >= as.Date('2020-02-01') )%>%
 # Should a House be bought: 
 Purchasing a house during a bubble is unwise however, we are not in those conditions right now. The market is currently boosted by high inflation and a shortage. Currently terrible economic policies run rampant and inflation seems like it will only continue to rise. However, the fate of the shortage is unknown. It does seem like there are more houses being introduced to the market and the prices might begin to fall. It is potentially a risk to buy many houses right now due to instability and the shortage potentially dropping prices. If one is in need of a house and wants to buy one right now then it is not an unwise decision but one could also wait and see if the shortage can be meet and in term drop prices. 
 
-```{r}
-rsconnect::writeManifest()
-```
+
